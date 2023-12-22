@@ -9,7 +9,7 @@ import (
 // Get ดึงข้อมูล Recipe จากฐานข้อมูล
 func (m *MySQLStore) Get(id string) (Recipe, error) {
 	var recipe Recipe
-	err := m.db.QueryRow("SELECT name, description FROM recipe WHERE name = ?", id).Scan(&recipe.Name, &recipe.Description)
+	err := m.db.QueryRow("SELECT name, Password FROM recipe WHERE name = ?", id).Scan(&recipe.Name, &recipe.Password)
 	if err != nil {
 		return Recipe{}, ErrNotFound
 	}

@@ -8,7 +8,7 @@ import (
 
 // Add เพิ่ม Recipe เข้าสู่ฐานข้อมูล
 func (m *MySQLStore) Add(name string, recipe Recipe) error {
-	_, err := m.db.Exec("INSERT INTO recipe (name, description) VALUES (?, ?)", name, recipe.Description)
+	_, err := m.db.Exec("INSERT INTO recipe (name, password) VALUES (?, ?)", name, recipe.Password)
 	return err
 }
 
@@ -18,6 +18,12 @@ func (h *RecipesHandler) CreateRecipe(c *gin.Context) {
 	var recipe Recipe
 	if err := c.ShouldBindJSON(&recipe); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// ตรวจสอบค่าว่าง
+	if recipe.Name == "" || recipe.Password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Name and description cannot be empty"})
 		return
 	}
 

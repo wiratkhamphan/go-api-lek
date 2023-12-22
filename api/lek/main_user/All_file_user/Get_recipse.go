@@ -8,7 +8,7 @@ import (
 
 // List ดึงรายการ Recipe ทั้งหมดจากฐานข้อมูล
 func (m *MySQLStore) List() (map[string]Recipe, error) {
-	rows, err := m.db.Query("SELECT name, description FROM recipe")
+	rows, err := m.db.Query("SELECT name, password FROM recipe")
 	if err != nil {
 		return nil, err
 	}
@@ -17,7 +17,7 @@ func (m *MySQLStore) List() (map[string]Recipe, error) {
 	recipes := make(map[string]Recipe)
 	for rows.Next() {
 		var recipe Recipe
-		err := rows.Scan(&recipe.Name, &recipe.Description)
+		err := rows.Scan(&recipe.Name, &recipe.Password)
 		if err != nil {
 			return nil, err
 		}

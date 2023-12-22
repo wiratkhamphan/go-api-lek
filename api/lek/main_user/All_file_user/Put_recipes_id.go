@@ -8,7 +8,7 @@ import (
 
 // Update อัพเดตข้อมูล Recipe ในฐานข้อมูล
 func (m *MySQLStore) Update(name string, recipe Recipe) error {
-	result, err := m.db.Exec("UPDATE recipe SET description = ? WHERE name = ?", recipe.Description, name)
+	result, err := m.db.Exec("UPDATE recipe SET password = ? WHERE name = ?", recipe.Password, name)
 	if err != nil {
 		return err
 	}
