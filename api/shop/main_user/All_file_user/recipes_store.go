@@ -1,4 +1,4 @@
-package lek
+package allfileuser
 
 // recipeStore คือ interface ที่กำหนดวิธีการจัดการกับข้อมูลของ Recipe
 type RecipeStore interface {

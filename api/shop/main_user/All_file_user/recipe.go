@@ -1,4 +1,4 @@
-package lek
+package allfileuser
 
 // Recipe คือโครงสร้างที่แทนสูตรอาหาร
 type Recipe struct {
