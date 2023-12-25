@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
+	home "github.com/wiratkhamphan/go-api-lek/api/shop/home"
 	shop "github.com/wiratkhamphan/go-api-lek/api/shop/main_user/All_file_user"
 	login "github.com/wiratkhamphan/go-api-lek/api/shop/main_user/login"
 	database "github.com/wiratkhamphan/go-api-lek/database"
@@ -35,7 +36,7 @@ func User_main() error {
 	store := shop.NewMySQLStore(db)
 	recipesHandler := shop.NewRecipesHandler(store)
 
-	router.GET("/", HomePage)
+	router.GET("/", home.HomePage)
 	router.GET("/recipes", recipesHandler.ListRecipes)
 	router.POST("/recipes", recipesHandler.CreateRecipe)
 	router.GET("/recipes/:id", recipesHandler.GetRecipe)

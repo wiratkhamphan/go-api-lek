@@ -7,20 +7,25 @@ if (!isset($_SESSION['sid'])) {
     exit();
 }
 
-include dirname(__FILE__) . '/../menu/header.php';
+
+
+
+$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 </head>
 <body>
+    <?php 
+    include __DIR__ . '/../menu/header.php';
+    ?>
 <div class="container-fluid">
-    <h2>Welcome to the Home Page!</h2>
+    <h2>Welcome to the Home Page, <?php echo $_SESSION['username']; ?></h2>
     <p>This is some content for the logged-in user.</p>
     <form method="post">
         <button type="submit" name="logout" class="btn btn-default">Logout</button>

@@ -1,39 +1,18 @@
+<?php
+include "api_login.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="ccss.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Login</title>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            margin-top: 50px;
-        }
-
-        .login-container {
-            max-width: 400px;
-            margin: auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -43,75 +22,64 @@
                 <h2>Login</h2>
             </div>
 
-            <?php
-            session_start();
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['loginButton'])) {
-                $username = $_POST['uname'];
-                $password = $_POST['pw'];
-
-                // Prepare data for API request
-                $userData = json_encode(['username' => $username, 'password' => $password]);
-
-                // Example using cURL to make a POST request to the Golang API
-                $apiUrl = "http://localhost:8080/login";
-                $ch = curl_init($apiUrl);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $userData);
-                $apiResponse = curl_exec($ch);
-                curl_close($ch);
-
-                // Handle API response
-                $apiData = json_decode($apiResponse, true);
-
-                if ($apiData['success']) {
-                    $_SESSION['sid'] = session_id();
-                    header('Location: ../home/index.php');
-                    exit();
-                } else {
-                    $loginError = true;
-                }
-            }
-
-            // Check if the logout button is clicked
-            if (isset($_POST['logout'])) {
-                session_destroy();
-                header('Location: login.php');
-                exit();
-            }
-            ?>
-
-            <?php if (isset($loginError)) { ?>
-                <div class='alert alert-danger'>
-                    Username and/or Password ไม่ถูกต้อง
+            <form class="form-horizontal" method="post" action="">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="uname" placeholder="Username">
                 </div>
-            <?php } ?>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="pw" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" name="loginButton" class="btn btn-primary btn-block">Login</button>
+                </div>
+            </form>
 
-            <?php if (isset($_SESSION['sid'])) { ?>
-                <form class="form-horizontal" method="post">
-                    <div class="form-group">
-                        <button type="submit" name="logout" class="btn btn-default btn-block">Logout</button>
-						</div>
-                </form>
-            <?php } else { ?>
-                <form class="form-horizontal" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="uname" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="pw" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" name="loginButton" class="btn btn-primary btn-block">Login</button>
-                    </div>
-                </form>
-            <?php } ?>
             <div class="login-footer">
                 &copy; 2023 Your Company
             </div>
         </div>
     </div>
+
+    <?php
+    // Include the modal script only if there's a login error
+    if ($loginError) {
+		echo '<script>';
+		echo '$(document).ready(function(){ $("#myModal").modal("show"); });';
+		echo '</script>';
+	}
+    ?>
+
+
+   <!-- Modal -->
+<div class="modal" id="myModal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Login Status</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <?php
+                if ($loginError) {
+                    echo '<div class="alert alert-danger">' . htmlspecialchars($errorMsg) . '</div>';
+                }
+                ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        // Add this script to reset modal status on page load
+        $(document).ready(function () {
+            // If the page is reloaded, close the modal
+            if (performance.navigation.type === 1) {
+                $("#myModal").modal("hide");
+            }
+        });
+    </script>
 </body>
 
 </html>

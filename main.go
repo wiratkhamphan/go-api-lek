@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
-	mainuser "github.com/wiratkhamphan/go-api-lek/api/shop/main_user"
+	main_shop "github.com/wiratkhamphan/go-api-lek/api/shop"
 )
 
 func main() {
-	err := mainuser.User_main()
+	err := main_shop.User_main()
 	if err != nil {
 		log.Fatalf("Error starting the server: %v", err)
 	}
