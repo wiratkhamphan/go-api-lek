@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <?php
                 if (isset($loginError)) {
-                    echo '<div class="alert alert-danger">Username and/or Password is incorrect.</div>';
+                    echo '<div class="alert alert-danger">' . $errorMsg . '</div>';
                 }
                 ?>
             </div>

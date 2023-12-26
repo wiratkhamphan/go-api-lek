@@ -45,7 +45,7 @@ func validateLogin(username, password string) bool {
 	defer db.Close()
 
 	var storedPassword string
-	err = db.QueryRow("SELECT Password FROM person WHERE name = ?", username).Scan(&storedPassword)
+	err = db.QueryRow("SELECT password FROM person WHERE username = ?", username).Scan(&storedPassword)
 
 	if err != nil {
 		return false

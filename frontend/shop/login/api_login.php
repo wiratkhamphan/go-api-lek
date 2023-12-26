@@ -15,32 +15,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['loginButton'])) {
     $username = $_POST['uname'];
     $password = $_POST['pw'];
 
-    $userData = json_encode(['username' => $username, 'password' => $password]);
-
-    $apiUrl = "http://localhost:8080/login";
-    $ch = curl_init($apiUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $userData);
-    $apiResponse = curl_exec($ch);
-
-    if (curl_errno($ch)) {
+    // Check if username or password is empty
+    if (empty($username) || empty($password)) {
         $loginError = true;
-        $errorMsg = 'Error connecting to the API.';
+        $errorMsg = 'Please enter both username and password.';
     } else {
-        $apiData = json_decode($apiResponse, true);
+        $userData = json_encode(['username' => $username, 'password' => $password]);
 
-        if (isset($apiData['success']) && $apiData['success']) {
-            $_SESSION['sid'] = session_id();
-            $_SESSION['username'] = $username;
-            header('Location: ../home/index.php');
-            exit();
-        } else {
+        $apiUrl = "http://localhost:8080/login";
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $userData);
+        $apiResponse = curl_exec($ch);
+
+        if (curl_errno($ch)) {
             $loginError = true;
-            $errorMsg = 'Invalid username or password.';
-        }
-    }
+            $errorMsg = 'Error connecting to the API.';
+        } else {
+            $apiData = json_decode($apiResponse, true);
 
-    curl_close($ch);
+            if (isset($apiData['success']) && $apiData['success']) {
+                $_SESSION['sid'] = session_id();
+                $_SESSION['username'] = $username;
+                header('Location: ../home/index.php');
+                exit();
+            } else {
+                $loginError = true;
+                $errorMsg = 'Invalid username or password.!!  ';
+            }
+        }
+
+        curl_close($ch);
+    }
 }
 ?>
