@@ -1,4 +1,4 @@
-package login
+package loginshop
 
 import (
 	_ "database/sql"
@@ -45,7 +45,7 @@ func validateLogin(username, password string) bool {
 	defer db.Close()
 
 	var storedPassword string
-	err = db.QueryRow("SELECT Password FROM recipe WHERE name = ?", username).Scan(&storedPassword)
+	err = db.QueryRow("SELECT Password FROM person WHERE name = ?", username).Scan(&storedPassword)
 
 	if err != nil {
 		return false
@@ -53,8 +53,4 @@ func validateLogin(username, password string) bool {
 
 	// Compare the stored password with the provided password
 	return storedPassword == password
-}
-
-func RegisterRoutes(router *gin.Engine) {
-	router.POST("/login", LoginHandler)
 }

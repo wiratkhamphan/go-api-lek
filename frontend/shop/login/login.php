@@ -30,10 +30,10 @@ include "api_login.php";
                     <input type="password" class="form-control" name="pw" placeholder="Password">
                 </div>
                 <div class="form-group">
-    <button type="submit" name="loginButton" class="btn btn-primary custom-button">Login</button>
-    <!-- <button type="button" class="btn btn-primary btn-block" onclick="redirectToRegister()">Register</button> -->
+                    <button type="submit" name="loginButton" class="btn btn-primary custom-button">Login</button>
+                    <!-- <button type="button" class="btn btn-primary btn-block" onclick="redirectToRegister()">Register</button> -->
 
-</div>
+                </div>
 
 
             </form>
@@ -54,10 +54,10 @@ include "api_login.php";
     ?>
 
 
-   <?php
-   include "modal_content.php";
-   
-   ?>
+    <?php
+    include "modal_content.php";
+
+    ?>
     <script>
         // Add this script to reset modal status on page load
         $(document).ready(function() {

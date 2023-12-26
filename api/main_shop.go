@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	home "github.com/wiratkhamphan/go-api-lek/api/shop/home"
 	login "github.com/wiratkhamphan/go-api-lek/api/shop/login"
-	"github.com/wiratkhamphan/go-api-lek/api/shop/stock"
+	stock "github.com/wiratkhamphan/go-api-lek/api/shop/stock"
 
 	database "github.com/wiratkhamphan/go-api-lek/database"
 )
