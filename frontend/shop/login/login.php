@@ -30,55 +30,46 @@ include "api_login.php";
                     <input type="password" class="form-control" name="pw" placeholder="Password">
                 </div>
                 <div class="form-group">
-                    <button type="submit" name="loginButton" class="btn btn-primary btn-block">Login</button>
-                </div>
+    <button type="submit" name="loginButton" class="btn btn-primary custom-button">Login</button>
+    <!-- <button type="button" class="btn btn-primary btn-block" onclick="redirectToRegister()">Register</button> -->
+
+</div>
+
+
             </form>
 
-            <div class="login-footer">
+            <!-- <div class="login-footer">
                 &copy; 2023 Your Company
-            </div>
+            </div> -->
         </div>
     </div>
 
     <?php
     // Include the modal script only if there's a login error
     if ($loginError) {
-		echo '<script>';
-		echo '$(document).ready(function(){ $("#myModal").modal("show"); });';
-		echo '</script>';
-	}
+        echo '<script>';
+        echo '$(document).ready(function(){ $("#myModal").modal("show"); });';
+        echo '</script>';
+    }
     ?>
 
 
-   <!-- Modal -->
-<div class="modal" id="myModal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Login Status</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <?php
-                if ($loginError) {
-                    echo '<div class="alert alert-danger">' . htmlspecialchars($errorMsg) . '</div>';
-                }
-                ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
+   <?php
+   include "modal_content.php";
+   
+   ?>
+    <script>
         // Add this script to reset modal status on page load
-        $(document).ready(function () {
+        $(document).ready(function() {
             // If the page is reloaded, close the modal
             if (performance.navigation.type === 1) {
                 $("#myModal").modal("hide");
             }
         });
+
+        function redirectToRegister() {
+            window.location.href = "../login/register/register.php";
+        }
     </script>
 </body>
 

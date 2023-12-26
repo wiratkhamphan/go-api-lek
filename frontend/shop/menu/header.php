@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['sid'])) {
+    // Redirect to login page if not logged in
+    header('Location: ../login/login.php');
+    exit();
+}
+
+$username = $_SESSION['username'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,16 +19,28 @@
     <title>Header</title>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Your Logo</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Your Logo</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <!-- Add more menu items as needed -->
+            </ul>
+            <form class="navbar-form navbar-right" method="post" action="">
+            <button type="submit" name="logout" class="btn btn-default">Logout</button>
+            <p class="navbar-text"><?php echo $_SESSION['username']; ?></p>
+        </form>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <!-- Add more menu items as needed -->
-        </ul>
-    </div>
-</nav>
+    </nav>
 </body>
 </html>
+
+<?php
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header('Location: ../login/login.php');
+    exit();
+}
+?>

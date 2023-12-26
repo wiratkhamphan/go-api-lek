@@ -1,17 +1,4 @@
-<?php
-session_start();
 
-if (!isset($_SESSION['sid'])) {
-    // Redirect to login page if not logged in
-    header('Location: ../login/login.php');
-    exit();
-}
-
-
-
-
-$username = $_SESSION['username'];
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +12,7 @@ $username = $_SESSION['username'];
     include __DIR__ . '/../menu/header.php';
     ?>
 <div class="container-fluid">
-    <h2>Welcome to the Home Page, <?php echo $_SESSION['username']; ?></h2>
+    <h2>Welcome to the Home Page, </h2>
     <p>This is some content for the logged-in user.</p>
     <form method="post">
         <button type="submit" name="logout" class="btn btn-default">Logout</button>

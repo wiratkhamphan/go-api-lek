@@ -10,3 +10,7 @@ import (
 func HomePage(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Welcome to the home page"})
 }
+
+func RegisterRoutes(router *gin.Engine) {
+	router.GET("/", HomePage)
+}

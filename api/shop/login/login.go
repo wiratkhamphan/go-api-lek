@@ -54,3 +54,7 @@ func validateLogin(username, password string) bool {
 	// Compare the stored password with the provided password
 	return storedPassword == password
 }
+
+func RegisterRoutes(router *gin.Engine) {
+	router.POST("/login", LoginHandler)
+}
