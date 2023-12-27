@@ -34,6 +34,9 @@ include "api_login.php";
                     <!-- <button type="button" class="btn btn-primary btn-block" onclick="redirectToRegister()">Register</button> -->
 
                 </div>
+                <div>
+                    <h4><a href="../register/register.php">register</a></h4>
+                </div>
 
 
             </form>
