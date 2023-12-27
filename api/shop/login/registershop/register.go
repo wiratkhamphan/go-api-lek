@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	database "github.com/wiratkhamphan/go-api-lek/database"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRegistration struct {
@@ -34,22 +35,33 @@ func RegisterHandler(c *gin.Context) {
 	defer db.Close()
 
 	// Perform registration by inserting a new user into the database
-	if err := insertUser(db, user); err != nil {
+	encryperdPassword, err := insertUser(db, user)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register the user"})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"success": true, "message": "Registration successful"})
+	// Send the encrypted password to the user (for demonstration purposes)
+	c.JSON(http.StatusCreated, gin.H{
+		"success":            true,
+		"message":            "Registration successful",
+		"encrypted_password": encryperdPassword,
+	})
 }
 
-func insertUser(db *sql.DB, user UserRegistration) error {
+func insertUser(db *sql.DB, user UserRegistration) (string, error) {
 	// Insert a new user into the 'person' table
-	_, err := db.Exec("INSERT INTO person (name, surname, username, password, iso_p_code) VALUES (?, ?, ?, ?, ?)",
-		user.Name, user.Surname, user.Username, user.Password, user.ISOPCode)
-
+	encryperdPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	_, err = db.Exec("INSERT INTO person (name, surname, username, password, iso_p_code) VALUES (?, ?, ?, ?, ?)",
+		user.Name, user.Surname, user.Username, encryperdPassword, user.ISOPCode)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(encryperdPassword), nil
 }

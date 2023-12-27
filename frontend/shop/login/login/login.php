@@ -31,12 +31,14 @@ include "api_login.php";
                 </div>
                 <div class="form-group">
                     <button type="submit" name="loginButton" class="btn btn-primary custom-button">Login</button>
-                    <!-- <button type="button" class="btn btn-primary btn-block" onclick="redirectToRegister()">Register</button> -->
+                   
 
                 </div>
                 <div>
                     <h4><a href="../register/register.php">register</a></h4>
                 </div>
+
+                .
 
 
             </form>
@@ -70,9 +72,7 @@ include "api_login.php";
             }
         });
 
-        // function redirectToRegister() {
-        //     window.location.href = "../login/register/register.php";
-        // }
+
     </script>
 </body>
 
