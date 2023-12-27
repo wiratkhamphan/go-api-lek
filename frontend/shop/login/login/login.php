@@ -24,10 +24,10 @@ include "api_login.php";
 
             <form class="form-horizontal" method="post" action="">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="uname" placeholder="Username">
+                    <input type="text" class="form-control" name="uname" required minlength="3" placeholder="Username">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="pw" placeholder="Password">
+                    <input type="password" class="form-control" name="pw" required minlength="3"  placeholder="Password">
                 </div>
                 <div class="form-group">
                     <button type="submit" name="loginButton" class="btn btn-primary custom-button">Login</button>
