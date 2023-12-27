@@ -13,6 +13,7 @@
     ?>
 <div class="container-fluid">
     <h2>Welcome to the Home Page, </h2>
+    <h2>tese git </h2>
     <p>This is some content for the logged-in user.</p>
     <form method="post">
         <button type="submit" name="logout" class="btn btn-default">Logout</button>
