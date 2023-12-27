@@ -51,17 +51,18 @@ func RegisterHandler(c *gin.Context) {
 
 func insertUser(db *sql.DB, user UserRegistration) (string, error) {
 	// Insert a new user into the 'person' table
-	encryperdPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+
 	if err != nil {
 		return "", err
 	}
 
 	_, err = db.Exec("INSERT INTO person (name, surname, username, password, iso_p_code) VALUES (?, ?, ?, ?, ?)",
-		user.Name, user.Surname, user.Username, encryperdPassword, user.ISOPCode)
+		user.Name, user.Surname, user.Username, encryptedPassword, user.ISOPCode)
 
 	if err != nil {
 		return "", err
 	}
 
-	return string(encryperdPassword), nil
+	return string(encryptedPassword), nil
 }
