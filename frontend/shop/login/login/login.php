@@ -67,9 +67,9 @@ include "api_login.php";
             }
         });
 
-        function redirectToRegister() {
-            window.location.href = "../login/register/register.php";
-        }
+        // function redirectToRegister() {
+        //     window.location.href = "../login/register/register.php";
+        // }
     </script>
 </body>
 

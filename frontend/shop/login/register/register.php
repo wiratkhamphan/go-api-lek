@@ -1,22 +1,18 @@
 <?php
 include "api_register.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <title>Register</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="register.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <title>Register</title>
-
-    
 </head>
-
 <body>
     <div class="container">
         <div class="login-container">
@@ -57,17 +53,16 @@ include "api_register.php";
             </form>
         </div>
     </div>
-<?php
-include "modal_content.php"
-?>
-    <script>
-    $(document).ready(function () {
-        <?php
-        if ($Register) {
-            echo '$("#myModal").modal("show");';
-        }
-        ?>
-    });
-</script>
+
+    <?php
+    include "modal_content.php";
+    if ($registerError) {
+        echo '<script>';
+        echo '$(document).ready(function(){ $("#myModal").modal("show"); });';
+        echo '</script>';
+    }
+    ?>
+
+   
 </body>
 </html>

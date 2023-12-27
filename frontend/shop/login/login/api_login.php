@@ -38,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['loginButton'])) {
             if (isset($apiData['success']) && $apiData['success']) {
                 $_SESSION['sid'] = session_id();
                 $_SESSION['username'] = $username;
-                header('Location: http://localhost/go-api-lek/frontend/shop/home/index.php');
+                header('Location:http://localhost/go-api-lek/frontend/shop/home/index.php');
                 exit();
             } else {
                 $loginError = true;
-                $errorMsg = 'Invalid username or password.';
+                $errorMsg = 'Invalid username or password.!!  ';
             }
         }
 

@@ -3,7 +3,7 @@ session_start();
 
 if (!isset($_SESSION['sid'])) {
     // Redirect to login page if not logged in
-    header('Location: ../login/login.php');
+    header('Location: ../login/login/login.php');
     exit();
 }
 
@@ -40,7 +40,7 @@ $username = $_SESSION['username'];
 <?php
 if (isset($_POST['logout'])) {
     session_destroy();
-    header('Location: ../login/login.php');
+    header('Location: ../login/login/login.php');
     exit();
 }
 ?>

@@ -1,16 +1,8 @@
 <?php
 session_start();
-$registrationError = false;
+$registerError = false;
 $errorMsg = '';
 
-// Check if the logout button is clicked
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: register.php');
-    exit();
-}
-
-// Check if the registration form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registerButton'])) {
     $userData = [
         'name' => $_POST['name'],
@@ -22,27 +14,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['registerButton'])) {
 
     $apiUrl = "http://localhost:8080/register";
     $ch = curl_init($apiUrl);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $userData);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
-    $apiResponse = curl_exec($ch);
+    $response = curl_exec($ch);
+    $responseData = json_decode($response, true);
 
-    if (curl_errno($ch)) {
-        $registrationError = true;
-        $errorMsg = 'Error connecting to the API: ' . curl_error($ch);
+    if ($response === false) {
+        $registerError = true;
+        $errorMsg = 'Error connecting to the API.';
     } else {
-        $apiData = json_decode($apiResponse, true);
-
-        if (isset($apiData['success']) && $apiData['success']) {
-            // Registration successful
-            $_SESSION['sid'] = session_id();
-            $_SESSION['username'] = $userData['username'];
-            $Register = true; // Set $Register to true
+        if ($responseData['success']) {
+            $_SESSION['register_response'] = 'Registration successful!';
         } else {
-            $registrationError = true;
-            $errorMsg = isset($apiData['message']) ? $apiData['message'] : 'Registration failed.';
+            $registerError = true;
+            $errorMsg = $responseData['message'];
         }
     }
 
