@@ -11,8 +11,7 @@ import (
 	database "github.com/wiratkhamphan/go-api-lek/database"
 )
 
-func Main_shop() {
-	router := gin.Default()
+func Main_shop(router *gin.Engine) {
 
 	// Connect to the database
 	db, err := database.DBConnection()
@@ -27,5 +26,5 @@ func Main_shop() {
 	stock.RegisterRoutes(router, db) // Pass the database connection to stock module
 
 	// Start the server
-	router.Run(":8080")
+
 }
